@@ -1,0 +1,161 @@
+Terraform Documentation – Create Google Cloud Storage (GCS) Bucket:
+
+
+ Objective
+This guide explains how to:
+✅ Install Terraform
+✅ Configure GCP authentication
+✅ Create a GCS bucket using Terraform
+✅ Understand each Terraform file
+✅ Run Terraform step-by-step
+✅ Verify resources
+✅ Destroy resources
+________________________________________
+________________________________________
+📋 Prerequisites
+Before starting, ensure:
+1. Install Terraform
+Download:
+ https://developer.hashicorp.com/terraform/downloads
+Verify:
+terraform -v
+________________________________________
+2. Install Google Cloud SDK
+Download:
+ https://cloud.google.com/sdk/docs/install
+Verify:
+gcloud -v
+________________________________________
+3. Login to GCP
+gcloud auth application-default login
+________________________________________
+4. Create or Select Project
+gcloud projects create my-tf-project
+gcloud config set project my-tf-project
+________________________________________
+________________________________________
+📁 Project Structure
+Create this folder structure:
+terraform-gcs/
+│
+├── main.tf
+├── variables.tf
+├── terraform.tfvars
+├── outputs.tf
+├── providers.tf
+└── versions.tf
+________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 	Step 1 – versions.tf
+Purpose
+Defines Terraform and provider version.
+Explanation
+Field	Meaning
+required_version	Terraform version
+required_providers	Provider plugin
+hashicorp/google	Official GCP provider
+________________________________________
+________________________________________
+ 	 Step 2 – providers.tf
+Purpose
+Connects Terraform to your GCP project.
+
+Explanation
+Terraform uses this to know:
+•	Which project
+•	Which region
+________________________________________
+________________________________________
+ 	Step 3 – main.tf
+ Core file (creates bucket)
+________________________________________
+Explanation of each block
+Resource block
+resource "google_storage_bucket" "gcs_bucket"
+Creates GCS bucket.
+________________________________________
+Important arguments
+Argument	Meaning
+name	Unique bucket name
+location	Region or multi-region
+storage_class	STANDARD / NEARLINE
+uniform_bucket_level_access	IAM only access
+versioning	Keep old versions
+lifecycle_rule	Auto delete old files
+labels	Metadata tags
+force_destroy	Delete even if not empty
+________________________________________
+________________________________________
+
+ 	Step 4 – variables.tf
+Purpose
+Defines reusable inputs.
+________________________________________
+________________________________________
+ 	 Step 5 – terraform.tfvars
+Purpose
+Provide real values for variables.
+Why needed?
+Keeps secrets/config separate from code.
+________________________________________
+
+________________________________________
+ 	 Step 6 – outputs.tf
+Purpose
+Print values after apply
+_____________________________________
+________________________________________
+ 	 Step 7 – Run Terraform
+Go to project folder:
+cd terraform-gcs
+________________________________________
+Initialize
+terraform init
+Downloads:
+•	provider plugins
+•	dependencies
+________________________________________
+Validate
+terraform validate
+Checks syntax.
+________________________________________
+Plan
+terraform plan
+Shows:
++ create google_storage_bucket
+Preview only (no creation yet).
+________________________________________
+Apply
+terraform apply
+Type:
+yes
+Bucket created 
+________________________________________
+________________________________________
+	Verify Bucket
+Console
+GCP Console → Cloud Storage → Buckets
+
+
+
+
+# Terraform GCS Bucket
+
+## Steps
+
+1. terraform init
+2. terraform plan
+3. terraform apply
+4. terraform destroy
